@@ -1,20 +1,18 @@
 package com.netflix.zuul.sample.filters.inbound;
 
-import com.netflix.zuul.message.http.HttpRequestInfo;
-import com.netflix.zuul.message.http.HttpRequestMessage;
-import org.junit.Test;
-
-import java.util.Arrays;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+import org.junit.Test;
+
+import com.netflix.zuul.message.http.HttpRequestMessage;
 
 public class ForwardFilterTest {
     
     @Test
     public void testShouldFilter() {
-        ForwardFilter filter = new ForwardFilter(Arrays.asList("/path1/.*"));
+        ForwardFilter filter = new ForwardFilter();
         assertThat(filter.shouldFilter(sampleHttpMessage("/path1/testRemaining?query1=val1"))).isTrue();
         assertThat(filter.shouldFilter(sampleHttpMessage("/path2/testRemaining?query1=val1"))).isFalse();
     }

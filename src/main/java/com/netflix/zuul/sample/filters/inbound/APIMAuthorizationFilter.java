@@ -37,7 +37,7 @@ public class APIMAuthorizationFilter extends HttpInboundFilter {
 				HeaderName accessTokenName = new HeaderName("access_token");
 				if(input.getHeaders()!=null) {
 					input.getHeaders().add(accessTokenName, apimTokenResponse.getAccessToken());
-				}else {
+				} else {
 					Headers newRequestHeaders = new Headers();
 					newRequestHeaders.add(accessTokenName, apimTokenResponse.getAccessToken());
 					input.setHeaders(newRequestHeaders);

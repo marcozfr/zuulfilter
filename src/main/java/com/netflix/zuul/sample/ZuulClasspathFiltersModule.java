@@ -1,7 +1,5 @@
 package com.netflix.zuul.sample;
 
-import java.util.Arrays;
-
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 import org.apache.http.impl.nio.client.HttpAsyncClientBuilder;
@@ -17,8 +15,8 @@ import com.netflix.zuul.filters.ZuulFilter;
 import com.netflix.zuul.groovy.GroovyCompiler;
 import com.netflix.zuul.guice.GuiceFilterFactory;
 import com.netflix.zuul.sample.filters.inbound.APIMAuthorizationFilter;
-import com.netflix.zuul.sample.filters.inbound.Routes;
 import com.netflix.zuul.sample.filters.inbound.ForwardFilter;
+import com.netflix.zuul.sample.filters.inbound.Routes;
 import com.netflix.zuul.sample.service.APIMAuthorizationService;
 
 
@@ -32,7 +30,7 @@ public class ZuulClasspathFiltersModule extends AbstractModule {
 
         Multibinder<ZuulFilter> filterMultibinder = Multibinder.newSetBinder(binder(), ZuulFilter.class);
         filterMultibinder.addBinding().to(Routes.class);
-        filterMultibinder.addBinding().toInstance(new ForwardFilter(Arrays.asList("/passthrough/.*")));
+        filterMultibinder.addBinding().toInstance(new ForwardFilter());
         
         Gson gson = new Gson();
         

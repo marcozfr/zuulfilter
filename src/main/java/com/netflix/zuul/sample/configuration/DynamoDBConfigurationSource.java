@@ -1,5 +1,7 @@
 package com.netflix.zuul.sample.configuration;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -7,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import com.netflix.config.PollResult;
 import com.netflix.config.PolledConfigurationSource;
-import com.netflix.zuul.sample.filters.inbound.APIMAuthorizationFilter;
+import com.netflix.zuul.sample.to.ForwardUrl;
 
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
@@ -41,7 +43,25 @@ public class DynamoDBConfigurationSource implements PolledConfigurationSource {
 		for(Map<String,AttributeValue> item : scanResponse.items()) {
 			AttributeValue propertyKeyAttribute = item.get("PropertyKey");
 			AttributeValue propertyValueAttribute = item.get("PropertyValue");
-			properties.put(propertyKeyAttribute.s(), propertyValueAttribute.s());
+			String propertyKey = propertyKeyAttribute.s();
+			final String forwardUrlKey = "com.claro.config.forward.url";
+			if(forwardUrlKey.equals(propertyKey)) {
+				List<AttributeValue> urlMappingValues = propertyValueAttribute.l();
+				if(urlMappingValues!=null && !urlMappingValues.isEmpty()) {
+					StringBuilder forwardUrlBuilder = new StringBuilder();
+					urlMappingValues.stream().map((urlMapping)-> urlMapping.m()).forEach((map) -> {
+						String origin = map.get("origin").s();
+						String destination = map.get("destination").s();
+						if(forwardUrlBuilder.length() != 0) {
+							forwardUrlBuilder.append(",");
+						}
+						forwardUrlBuilder.append(origin).append(":").append(destination);
+					});
+					properties.put(forwardUrlKey, forwardUrlBuilder.toString());
+				}
+			} else {
+				properties.put(propertyKey, propertyValueAttribute.s());
+			}
 		}
 		
 		return PollResult.createFull(properties);
