@@ -1,6 +1,8 @@
 package com.netflix.zuul.sample;
 
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 import org.apache.http.impl.nio.client.HttpAsyncClientBuilder;
 
@@ -46,7 +48,9 @@ public class ZuulClasspathFiltersModule extends AbstractModule {
         
         httpAsyncClient.start();
         
-        APIMAuthorizationService apimAuthorizationService = new APIMAuthorizationService(httpAsyncClient, gson);
+        HttpClient httpClient = HttpClientBuilder.create().build(); 
+        
+        APIMAuthorizationService apimAuthorizationService = new APIMAuthorizationService(httpAsyncClient, httpClient, gson);
         APIMAuthorizationFilter apimAuthorizationFilter = new APIMAuthorizationFilter(apimAuthorizationService);
         filterMultibinder.addBinding().toInstance(apimAuthorizationFilter);
     }

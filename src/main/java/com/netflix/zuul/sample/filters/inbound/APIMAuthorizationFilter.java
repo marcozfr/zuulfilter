@@ -32,8 +32,10 @@ public class APIMAuthorizationFilter extends HttpInboundFilter {
 
 	@Override
 	public Observable<HttpRequestMessage> applyAsync(HttpRequestMessage input) {
-		return apimAuthorizationService.requestTokenAsync().map(apimTokenResponse -> {
+		
+		return apimAuthorizationService.getAPIMTokenResponse().map(apimTokenResponse -> {
 			if(apimTokenResponse!=null && apimTokenResponse.getAccessToken()!=null) {
+				logger.info("Enrichment with token: {}", apimTokenResponse.getAccessToken());
 				HeaderName accessTokenName = new HeaderName("access_token");
 				if(input.getHeaders()!=null) {
 					input.getHeaders().add(accessTokenName, apimTokenResponse.getAccessToken());

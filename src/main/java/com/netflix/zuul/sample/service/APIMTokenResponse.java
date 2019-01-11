@@ -1,5 +1,7 @@
 package com.netflix.zuul.sample.service;
 
+import java.time.LocalDateTime;
+
 import com.google.gson.annotations.SerializedName;
 
 public class APIMTokenResponse {
@@ -11,9 +13,11 @@ public class APIMTokenResponse {
 	private String tokenType;
 	
 	@SerializedName("expires_in")
-	private String expiresIn;
+	private Long expiresIn;
 	
 	private String scope;
+	
+	private LocalDateTime expirationDateTime;
 
 	public String getAccessToken() {
 		return accessToken;
@@ -31,11 +35,12 @@ public class APIMTokenResponse {
 		this.tokenType = tokenType;
 	}
 
-	public String getExpiresIn() {
+
+	public Long getExpiresIn() {
 		return expiresIn;
 	}
 
-	public void setExpiresIn(String expiresIn) {
+	public void setExpiresIn(Long expiresIn) {
 		this.expiresIn = expiresIn;
 	}
 
@@ -46,7 +51,13 @@ public class APIMTokenResponse {
 	public void setScope(String scope) {
 		this.scope = scope;
 	}
-	
-	
+
+	public LocalDateTime getExpirationDateTime() {
+		return expirationDateTime;
+	}
+
+	public void setExpirationDateTime(LocalDateTime expirationDateTime) {
+		this.expirationDateTime = expirationDateTime;
+	}
 
 }
