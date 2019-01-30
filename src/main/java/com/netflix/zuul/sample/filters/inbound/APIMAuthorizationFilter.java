@@ -3,6 +3,8 @@ package com.netflix.zuul.sample.filters.inbound;
 import java.util.Collections;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,7 @@ public class APIMAuthorizationFilter extends HttpInboundFilter {
 	
 	private APIMAuthorizationService apimAuthorizationService;
 	
+	@Inject
 	public APIMAuthorizationFilter(APIMAuthorizationService apimAuthorizationService) {
 		this.apimAuthorizationService = apimAuthorizationService;
 	}

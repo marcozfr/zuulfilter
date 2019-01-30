@@ -1,9 +1,10 @@
 package com.netflix.zuul.sample.to;
 
-public class ForwardUrl {
+public class ProxyRoute {
 	
 	private String destination;
 	private String origin;
+	private long timeout;
 	
 	public String getDestination() {
 		return destination;
@@ -16,6 +17,12 @@ public class ForwardUrl {
 	}
 	public void setOrigin(String origin) {
 		this.origin = origin;
+	}
+	public long getTimeout() {
+		return timeout;
+	}
+	public void setTimeout(long timeout) {
+		this.timeout = timeout;
 	}
 	
 }

@@ -1,4 +1,4 @@
-package com.netflix.zuul.sample.service;
+package com.netflix.zuul.sample.to;
 
 import com.google.gson.annotations.SerializedName;
 

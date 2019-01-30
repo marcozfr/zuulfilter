@@ -16,16 +16,12 @@
 
 package com.netflix.zuul.sample;
 
-import org.apache.commons.configuration.AbstractConfiguration;
-
 import com.google.inject.Injector;
 import com.netflix.config.AbstractPollingScheduler;
 import com.netflix.config.ConfigurationManager;
 import com.netflix.config.DynamicConfiguration;
-import com.netflix.config.DynamicWatchedConfiguration;
 import com.netflix.config.FixedDelayPollingScheduler;
 import com.netflix.config.PolledConfigurationSource;
-import com.netflix.config.WatchedConfigurationSource;
 import com.netflix.governator.InjectorBuilder;
 import com.netflix.zuul.netty.server.BaseServerStartup;
 import com.netflix.zuul.netty.server.Server;
@@ -58,7 +54,7 @@ public class Bootstrap {
         	DynamicConfiguration configuration = new DynamicConfiguration(dynamoConfigurationSource, fixedDelayPollingScheduler);
         	ConfigurationManager.install(configuration);
         	
-//            ConfigurationManager.loadCascadedPropertiesFromResources("application");
+            ConfigurationManager.loadCascadedPropertiesFromResources("application");
         	
             Injector injector = InjectorBuilder.fromModule(new ZuulSampleModule()).createInjector();
             injector.getInstance(FiltersRegisteringService.class);

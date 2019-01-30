@@ -1,5 +1,9 @@
 package com.netflix.zuul.sample;
 
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+
+import javax.sql.DataSource;
+
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -16,10 +20,14 @@ import com.netflix.zuul.FilterUsageNotifier;
 import com.netflix.zuul.filters.ZuulFilter;
 import com.netflix.zuul.groovy.GroovyCompiler;
 import com.netflix.zuul.guice.GuiceFilterFactory;
+import com.netflix.zuul.sample.dao.ProxyConfigurationDAO;
 import com.netflix.zuul.sample.filters.inbound.APIMAuthorizationFilter;
 import com.netflix.zuul.sample.filters.inbound.ForwardFilter;
 import com.netflix.zuul.sample.filters.inbound.Routes;
 import com.netflix.zuul.sample.service.APIMAuthorizationService;
+import com.netflix.zuul.sample.service.ProxyConfigurationService;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 
 public class ZuulClasspathFiltersModule extends AbstractModule {
@@ -48,10 +56,31 @@ public class ZuulClasspathFiltersModule extends AbstractModule {
         
         httpAsyncClient.start();
         
+        ScheduledThreadPoolExecutor scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(2);
+        
+        bind(ScheduledThreadPoolExecutor.class).toInstance(scheduledThreadPoolExecutor);
+        
+        HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setJdbcUrl("jdbc:mysql://dbauroraclarodev.cx053an4mesk.us-east-1.rds.amazonaws.com:3306/dbclarohogardev");
+        hikariConfig.setUsername("userclarohogar");
+        hikariConfig.setPassword("us3rcl4r0h0g4r2018*");
+        hikariConfig.addDataSourceProperty("cachePrepStmts","true");
+        hikariConfig.addDataSourceProperty("prepStmtCacheSize","250");
+        hikariConfig.addDataSourceProperty("prepStmtCacheSqlLimit","2048");
+        DataSource configDatasource = new HikariDataSource(hikariConfig);
+        
+        bind(DataSource.class).toInstance(configDatasource);
+        
         HttpClient httpClient = HttpClientBuilder.create().build(); 
         
-        APIMAuthorizationService apimAuthorizationService = new APIMAuthorizationService(httpAsyncClient, httpClient, gson);
-        APIMAuthorizationFilter apimAuthorizationFilter = new APIMAuthorizationFilter(apimAuthorizationService);
-        filterMultibinder.addBinding().toInstance(apimAuthorizationFilter);
+        bind(HttpClient.class).toInstance(httpClient);
+        
+        filterMultibinder.addBinding().to(APIMAuthorizationFilter.class);
+        
+        bind(ProxyConfigurationDAO.class);
+        
+        bind(APIMAuthorizationService.class);
+        
+        bind(ProxyConfigurationService.class);
     }
 }

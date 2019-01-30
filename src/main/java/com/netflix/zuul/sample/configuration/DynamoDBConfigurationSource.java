@@ -1,6 +1,5 @@
 package com.netflix.zuul.sample.configuration;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,7 +8,6 @@ import org.slf4j.LoggerFactory;
 
 import com.netflix.config.PollResult;
 import com.netflix.config.PolledConfigurationSource;
-import com.netflix.zuul.sample.to.ForwardUrl;
 
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
