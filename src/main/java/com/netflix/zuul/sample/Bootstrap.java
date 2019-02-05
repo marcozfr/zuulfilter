@@ -49,10 +49,10 @@ public class Bootstrap {
 
         try {
         	
-        	PolledConfigurationSource dynamoConfigurationSource = new DynamoDBConfigurationSource();
-        	AbstractPollingScheduler fixedDelayPollingScheduler = new FixedDelayPollingScheduler(); 
-        	DynamicConfiguration configuration = new DynamicConfiguration(dynamoConfigurationSource, fixedDelayPollingScheduler);
-        	ConfigurationManager.install(configuration);
+//        	PolledConfigurationSource dynamoConfigurationSource = new DynamoDBConfigurationSource();
+//        	AbstractPollingScheduler fixedDelayPollingScheduler = new FixedDelayPollingScheduler(); 
+//        	DynamicConfiguration configuration = new DynamicConfiguration(dynamoConfigurationSource, fixedDelayPollingScheduler);
+//        	ConfigurationManager.install(configuration);
         	
             ConfigurationManager.loadCascadedPropertiesFromResources("application");
         	

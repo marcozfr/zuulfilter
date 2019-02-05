@@ -38,7 +38,7 @@ public class APIMAuthorizationFilter extends HttpInboundFilter {
 		
 		return apimAuthorizationService.getAPIMTokenResponse().map(apimTokenResponse -> {
 			if(apimTokenResponse!=null && apimTokenResponse.getAccessToken()!=null) {
-				logger.info("Enrichment with token: {}", apimTokenResponse.getAccessToken());
+				logger.debug("Enrichment with token: {}", apimTokenResponse.getAccessToken());
 				HeaderName accessTokenName = new HeaderName("access_token");
 				if(input.getHeaders()!=null) {
 					input.getHeaders().add(accessTokenName, apimTokenResponse.getAccessToken());
@@ -48,7 +48,7 @@ public class APIMAuthorizationFilter extends HttpInboundFilter {
 					input.setHeaders(newRequestHeaders);
 				}
 			} else {
-				logger.info("Did not receive access_token from observable");
+				logger.debug("Did not receive access_token from observable");
 			}
 			return input;
 		});
