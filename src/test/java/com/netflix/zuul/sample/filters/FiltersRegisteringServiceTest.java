@@ -1,10 +1,11 @@
 package com.netflix.zuul.sample.filters;
 
+import com.claro.postventa.proxy.FiltersRegisteringService;
+import com.claro.postventa.proxy.ZuulClasspathFiltersModule;
 import com.google.inject.Injector;
 import com.netflix.governator.InjectorBuilder;
 import com.netflix.zuul.filters.ZuulFilter;
-import com.netflix.zuul.sample.FiltersRegisteringService;
-import com.netflix.zuul.sample.ZuulClasspathFiltersModule;
+
 import org.junit.Test;
 
 import java.util.List;

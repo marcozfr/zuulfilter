@@ -1,4 +1,4 @@
-package com.netflix.zuul.sample.service;
+package com.claro.postventa.proxy.service;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -11,8 +11,8 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.netflix.zuul.sample.dao.ProxyConfigurationDAO;
-import com.netflix.zuul.sample.to.ProxyRoute;
+import com.claro.postventa.proxy.dao.ProxyConfigurationDAO;
+import com.claro.postventa.proxy.to.ProxyRoute;
 
 public class ProxyConfigurationService {
 	

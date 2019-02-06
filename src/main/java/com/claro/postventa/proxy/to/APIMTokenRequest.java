@@ -1,4 +1,4 @@
-package com.netflix.zuul.sample.to;
+package com.claro.postventa.proxy.to;
 
 import com.google.gson.annotations.SerializedName;
 

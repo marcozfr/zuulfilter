@@ -1,4 +1,4 @@
-package com.netflix.zuul.sample;
+package com.claro.postventa.proxy;
 
 import com.netflix.zuul.filters.FilterRegistry;
 import com.netflix.zuul.filters.ZuulFilter;

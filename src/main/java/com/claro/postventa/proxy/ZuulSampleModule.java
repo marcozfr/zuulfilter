@@ -14,7 +14,7 @@
  *      limitations under the License.
  */
 
-package com.netflix.zuul.sample;
+package com.claro.postventa.proxy;
 
 import com.google.inject.AbstractModule;
 import com.netflix.discovery.AbstractDiscoveryClientOptionalArgs;

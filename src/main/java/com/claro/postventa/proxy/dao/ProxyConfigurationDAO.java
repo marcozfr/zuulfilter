@@ -1,4 +1,4 @@
-package com.netflix.zuul.sample.dao;
+package com.claro.postventa.proxy.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,10 +13,10 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.claro.postventa.proxy.to.ProxyRoute;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.netflix.config.sources.JDBCConfigurationSource;
-import com.netflix.zuul.sample.to.ProxyRoute;
 
 @Singleton
 public class ProxyConfigurationDAO {

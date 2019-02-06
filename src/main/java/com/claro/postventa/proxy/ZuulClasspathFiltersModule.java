@@ -1,16 +1,26 @@
-package com.netflix.zuul.sample;
+package com.claro.postventa.proxy;
 
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
+import javax.security.auth.login.Configuration;
 import javax.sql.DataSource;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.impl.client.HttpClientBuilder;
 
+import com.claro.postventa.proxy.dao.ProxyConfigurationDAO;
+import com.claro.postventa.proxy.filters.APIMAuthorizationFilter;
+import com.claro.postventa.proxy.filters.ForwardFilter;
+import com.claro.postventa.proxy.filters.InboundLoggingFilter;
+import com.claro.postventa.proxy.filters.OutboundLoggingFilter;
+import com.claro.postventa.proxy.filters.Routes;
+import com.claro.postventa.proxy.service.APIMAuthorizationService;
+import com.claro.postventa.proxy.service.ProxyConfigurationService;
 import com.google.inject.AbstractModule;
 import com.google.inject.multibindings.Multibinder;
+import com.netflix.config.ConfigurationManager;
 import com.netflix.zuul.BasicFilterUsageNotifier;
 import com.netflix.zuul.DynamicCodeCompiler;
 import com.netflix.zuul.FilterFactory;
@@ -18,12 +28,6 @@ import com.netflix.zuul.FilterUsageNotifier;
 import com.netflix.zuul.filters.ZuulFilter;
 import com.netflix.zuul.groovy.GroovyCompiler;
 import com.netflix.zuul.guice.GuiceFilterFactory;
-import com.netflix.zuul.sample.dao.ProxyConfigurationDAO;
-import com.netflix.zuul.sample.filters.inbound.APIMAuthorizationFilter;
-import com.netflix.zuul.sample.filters.inbound.ForwardFilter;
-import com.netflix.zuul.sample.filters.inbound.Routes;
-import com.netflix.zuul.sample.service.APIMAuthorizationService;
-import com.netflix.zuul.sample.service.ProxyConfigurationService;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -41,9 +45,9 @@ public class ZuulClasspathFiltersModule extends AbstractModule {
         bind(ScheduledExecutorService.class).toInstance(scheduledThreadPoolExecutor);
         
         HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl("jdbc:mysql://dbauroraclarodev.cx053an4mesk.us-east-1.rds.amazonaws.com:3306/dbclarohogardev");
-        hikariConfig.setUsername("userclarohogar");
-        hikariConfig.setPassword("us3rcl4r0h0g4r2018*");
+        hikariConfig.setJdbcUrl(ConfigurationManager.getConfigInstance().getString("com.claro.config.proxyroutes.jdbc.url"));
+        hikariConfig.setUsername(ConfigurationManager.getConfigInstance().getString("com.claro.config.proxyroutes.jdbc.username"));
+        hikariConfig.setPassword(ConfigurationManager.getConfigInstance().getString("com.claro.config.proxyroutes.jdbc.password"));
         hikariConfig.addDataSourceProperty("cachePrepStmts","true");
         hikariConfig.addDataSourceProperty("prepStmtCacheSize","250");
         hikariConfig.addDataSourceProperty("prepStmtCacheSqlLimit","2048");
@@ -67,6 +71,8 @@ public class ZuulClasspathFiltersModule extends AbstractModule {
         filterMultibinder.addBinding().to(Routes.class);
         filterMultibinder.addBinding().to(ForwardFilter.class);
         filterMultibinder.addBinding().to(APIMAuthorizationFilter.class);
+        filterMultibinder.addBinding().to(InboundLoggingFilter.class);
+        filterMultibinder.addBinding().to(OutboundLoggingFilter.class);
         
     }
 }

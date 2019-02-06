@@ -1,4 +1,4 @@
-package com.netflix.zuul.sample.service;
+package com.claro.postventa.proxy.service;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,13 +17,12 @@ import org.apache.http.entity.StringEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.claro.postventa.proxy.to.APIMTokenRequest;
+import com.claro.postventa.proxy.to.APIMTokenResponse;
 import com.google.gson.Gson;
 import com.netflix.config.ConfigurationManager;
-import com.netflix.zuul.sample.to.APIMTokenRequest;
-import com.netflix.zuul.sample.to.APIMTokenResponse;
 
 import rx.Observable;
-
 
 public class APIMAuthorizationService {
 	
@@ -40,7 +39,7 @@ public class APIMAuthorizationService {
 	private ScheduledExecutorService executorService;
 	
 	@Inject
-	public APIMAuthorizationService(HttpClient httpClient, ScheduledExecutorService executorService) {
+	public APIMAuthorizationService(HttpClient httpClient, ScheduledExecutorService executorService) { 
 		this.gson = new Gson();
 		this.apimTokenRequest = new APIMTokenRequest();
 		this.apimTokenRequest.setClientId("2d010a10-7ed9-4fbc-abc1-455eae702a58");

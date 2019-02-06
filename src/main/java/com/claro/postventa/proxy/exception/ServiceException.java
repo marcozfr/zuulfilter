@@ -1,4 +1,4 @@
-package com.netflix.zuul.sample.exception;
+package com.claro.postventa.proxy.exception;
 
 public class ServiceException extends Exception {
 	

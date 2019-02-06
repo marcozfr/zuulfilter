@@ -1,11 +1,11 @@
-package com.netflix.zuul.sample.filters.inbound;
+package com.claro.postventa.proxy.filters;
 
+import com.claro.postventa.proxy.service.ProxyConfigurationService;
+import com.claro.postventa.proxy.to.ProxyRoute;
 import com.google.inject.Inject;
 import com.netflix.zuul.context.SessionContext;
 import com.netflix.zuul.filters.http.HttpInboundSyncFilter;
 import com.netflix.zuul.message.http.HttpRequestMessage;
-import com.netflix.zuul.sample.service.ProxyConfigurationService;
-import com.netflix.zuul.sample.to.ProxyRoute;
 
 public class ForwardFilter extends HttpInboundSyncFilter {
 	

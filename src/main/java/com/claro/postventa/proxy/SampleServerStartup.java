@@ -14,7 +14,7 @@
  *      limitations under the License.
  */
 
-package com.netflix.zuul.sample;
+package com.claro.postventa.proxy;
 
 import com.netflix.appinfo.ApplicationInfoManager;
 import com.netflix.config.DynamicIntProperty;

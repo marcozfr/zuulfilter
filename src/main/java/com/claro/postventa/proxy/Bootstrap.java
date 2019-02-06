@@ -14,8 +14,9 @@
  *      limitations under the License.
  */
 
-package com.netflix.zuul.sample;
+package com.claro.postventa.proxy;
 
+import com.claro.postventa.proxy.configuration.DynamoDBConfigurationSource;
 import com.google.inject.Injector;
 import com.netflix.config.AbstractPollingScheduler;
 import com.netflix.config.ConfigurationManager;
@@ -25,7 +26,6 @@ import com.netflix.config.PolledConfigurationSource;
 import com.netflix.governator.InjectorBuilder;
 import com.netflix.zuul.netty.server.BaseServerStartup;
 import com.netflix.zuul.netty.server.Server;
-import com.netflix.zuul.sample.configuration.DynamoDBConfigurationSource;
 
 /**
  * Bootstrap

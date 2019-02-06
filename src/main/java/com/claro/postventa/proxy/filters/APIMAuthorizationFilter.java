@@ -1,4 +1,4 @@
-package com.netflix.zuul.sample.filters.inbound;
+package com.claro.postventa.proxy.filters;
 
 import java.util.Collections;
 import java.util.List;
@@ -8,12 +8,12 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.claro.postventa.proxy.service.APIMAuthorizationService;
 import com.netflix.config.ConfigurationManager;
 import com.netflix.zuul.filters.http.HttpInboundFilter;
 import com.netflix.zuul.message.HeaderName;
 import com.netflix.zuul.message.Headers;
 import com.netflix.zuul.message.http.HttpRequestMessage;
-import com.netflix.zuul.sample.service.APIMAuthorizationService;
 
 import rx.Observable;
 
@@ -56,6 +56,7 @@ public class APIMAuthorizationFilter extends HttpInboundFilter {
 
 	@Override
 	public boolean shouldFilter(HttpRequestMessage msg) {
+		
 		boolean apimAuthorizationEnabled = ConfigurationManager.getConfigInstance()
 				.getBoolean("com.claro.config.authorization.apim.enabled");
 		
@@ -63,7 +64,8 @@ public class APIMAuthorizationFilter extends HttpInboundFilter {
 			List<Object> urlPrefixes = ConfigurationManager.getConfigInstance()
 					.getList("com.claro.config.authorization.apim.urlprefixes", Collections.emptyList());
 			String path = msg.getPath();
-			return urlPrefixes.stream().anyMatch((urlPrefix) -> path.startsWith((String)urlPrefix));
+			boolean matches = urlPrefixes.stream().anyMatch((urlPrefix) -> path.startsWith((String)urlPrefix));
+			return matches;
 		}
 		
 		return false;

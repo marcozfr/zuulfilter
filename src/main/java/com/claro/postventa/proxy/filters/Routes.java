@@ -1,4 +1,4 @@
-package com.netflix.zuul.sample.filters.inbound;
+package com.claro.postventa.proxy.filters;
 
 import com.netflix.zuul.context.SessionContext;
 import com.netflix.zuul.filters.http.HttpInboundSyncFilter;

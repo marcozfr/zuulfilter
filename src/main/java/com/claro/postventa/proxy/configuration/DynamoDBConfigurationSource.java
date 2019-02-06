@@ -1,4 +1,4 @@
-package com.netflix.zuul.sample.configuration;
+package com.claro.postventa.proxy.configuration;
 
 import java.util.List;
 import java.util.Map;
